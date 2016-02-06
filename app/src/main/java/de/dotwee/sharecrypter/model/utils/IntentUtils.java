@@ -35,9 +35,9 @@ public final class IntentUtils {
         return state;
     }
 
-    @Nullable
+    @NonNull
     public static String getFilePath(@NonNull Intent intent) {
-        String filePath = null;
+        String filePath = "";
 
         switch (intent.getAction()) {
             case Intent.ACTION_SEND:
@@ -58,8 +58,8 @@ public final class IntentUtils {
                 break;
         }
 
-        if (filePath == null) {
-            Timber.w("File path equals null. Couldn't fetch file path from intent.");
+        if (filePath.isEmpty()) {
+            Timber.w("File path is empty. Couldn't fetch file path from intent.");
         } else Timber.i("Fetched file path from intent: %s", filePath);
 
         return filePath;

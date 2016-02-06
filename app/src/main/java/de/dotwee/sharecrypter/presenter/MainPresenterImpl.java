@@ -22,7 +22,6 @@ import timber.log.Timber;
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.STATE_DECRYPT;
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.STATE_ENCRYPT;
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.getState;
-import static de.dotwee.sharecrypter.model.utils.LogUtils.logIntent;
 
 /**
  * Created by Lukas Wolfsteiner on 03.02.2016.
@@ -56,7 +55,6 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
         this.STATE = getState(intent);
         String state_action;
 
-        logIntent(intent, applicationContext);
         switch (STATE) {
 
             case STATE_ENCRYPT:
