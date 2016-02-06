@@ -15,6 +15,7 @@ import de.dotwee.sharecrypter.model.actions.EncryptAction;
 import de.dotwee.sharecrypter.model.callbacks.CryptActionCallback;
 import de.dotwee.sharecrypter.model.commands.CryptCommand;
 import de.dotwee.sharecrypter.model.commands.CryptCommandManager;
+import de.dotwee.sharecrypter.model.utils.DialogUtils;
 import de.dotwee.sharecrypter.model.utils.IntentUtils;
 import de.dotwee.sharecrypter.model.utils.StringUtils;
 import de.dotwee.sharecrypter.view.MainActivity;
@@ -67,6 +68,12 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
                 break;
 
             default:
+                DialogUtils.showDialog(
+                        applicationContext,
+                        R.string.dialog_name_error,
+                        R.string.message_no_file_provided
+                );
+
                 this.onButtonNegative();
                 return;
         }
@@ -81,7 +88,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
     @Override
     public void onButtonNegative() {
 
-        // finish activity
+        // Close application using Activity.finish();
         mainActivity.finish();
     }
 

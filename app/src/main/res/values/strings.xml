@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ShareCrypter</string>
+    <string name="dialog_name_error">Fatal error</string>
 
     <string name="caption_password">password</string>
     <string name="caption_file">file</string>
@@ -8,6 +9,7 @@
     <string name="action_decrypt">decrypt</string>
 
     <string name="message_no_empty_password_allowed">You have to enter a password to continue.</string>
-    <string name="message_unable_to_locate_basefile">Could't get the base-file. Take a look at your logcat.</string>
+    <string name="message_unable_to_locate_basefile">Could\'t get the base-file. Take a look at your logcat.</string>
+    <string name="message_no_file_provided">Warning: No file provided. \/n\/nThis application is useless without a file attached. Open or send a single file to this application using a file-browser to start de-/encrypting your files.</string>
     <string name="message_work_finished">File has been successfully %2ed.</string>
 </resources>
