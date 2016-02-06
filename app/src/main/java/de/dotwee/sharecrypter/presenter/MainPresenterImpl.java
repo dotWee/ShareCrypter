@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import de.dotwee.sharecrypter.R;
 import de.dotwee.sharecrypter.model.actions.AbstractCryptAction;
@@ -97,6 +98,11 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
 
         try {
             File baseFile = IntentUtils.getFile(intent);
+            if (baseFile == null) {
+
+                throw new FileNotFoundException("Couldn't get base file.");
+            }
+
             AbstractCryptAction cryptAction;
 
             switch (STATE) {
@@ -129,6 +135,11 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
 
         } catch (IllegalStateException | NullPointerException e) {
             e.printStackTrace();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            Toast.makeText(applicationContext, applicationContext.getString(R.string.message_unable_to_locate_basefile), Toast.LENGTH_SHORT).show();
         }
     }
 

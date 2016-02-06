@@ -8,5 +8,6 @@
     <string name="action_decrypt">decrypt</string>
 
     <string name="message_no_empty_password_allowed">You have to enter a password to continue.</string>
+    <string name="message_unable_to_locate_basefile">Could't get the base-file. Take a look at your logcat.</string>
     <string name="message_work_finished">File has been successfully %2ed.</string>
 </resources>
