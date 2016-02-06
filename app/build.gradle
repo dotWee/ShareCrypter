@@ -17,10 +17,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Testing frameworks
+    testCompile "org.robolectric:robolectric:3.0"
     testCompile 'junit:junit:4.12'
+
+    // UI tools
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    // Model tools
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile 'com.jakewharton.timber:timber:4.1.0'
+    compile 'com.karumi:dexter:2.2.1'
 }
