@@ -19,14 +19,19 @@ import timber.log.Timber;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String LOG_TAG = "MainActivity";
+
     @Bind(R.id.dialogTitle)
     public TextView textViewDialogTitle;
-    @Bind(R.id.textViewPasswordHint)
-    public TextView textViewPasswordHint;
+
+    @Bind(R.id.textViewCaptionPassword)
+    public TextView textViewCaptionPassword;
+
     @Bind(R.id.buttonPositive)
     public Button buttonPositive;
+
     @Bind(R.id.editTextPassword)
     public EditText editTextPassword;
+
     private MainPresenter mainPresenter;
 
     @Override

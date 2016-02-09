@@ -14,4 +14,16 @@ public interface MainPresenter {
     void onButtonNegative();
 
     void onButtonPositive();
+
+    void onTextChanges();
+
+    /**
+     * This method handles changes on the main dialog title.
+     */
+    void onTitleChange();
+
+    /**
+     * This method handles text changes on the main dialog content.
+     */
+    void onContentTextChange();
 }

@@ -13,6 +13,7 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:text="@android:string/cancel" />
 
     <Space
@@ -24,6 +25,7 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         tools:text="Positive" />
 
 </LinearLayout>

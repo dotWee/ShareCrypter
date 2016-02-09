@@ -8,7 +8,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import de.dotwee.sharecrypter.Constants;
 import de.dotwee.sharecrypter.R;
 import de.dotwee.sharecrypter.model.actions.AbstractCryptAction;
 import de.dotwee.sharecrypter.model.actions.DecryptAction;
@@ -17,14 +16,14 @@ import de.dotwee.sharecrypter.model.callbacks.CryptActionCallback;
 import de.dotwee.sharecrypter.model.commands.CryptCommand;
 import de.dotwee.sharecrypter.model.commands.CryptCommandManager;
 import de.dotwee.sharecrypter.model.utils.DialogUtils;
-import de.dotwee.sharecrypter.model.utils.IntentUtils;
-import de.dotwee.sharecrypter.model.utils.StringUtils;
 import de.dotwee.sharecrypter.view.MainActivity;
 import timber.log.Timber;
 
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.STATE_DECRYPT;
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.STATE_ENCRYPT;
+import static de.dotwee.sharecrypter.model.utils.IntentUtils.getFile;
 import static de.dotwee.sharecrypter.model.utils.IntentUtils.getState;
+import static de.dotwee.sharecrypter.model.utils.StringUtils.capitalizeFirstLetter;
 
 /**
  * Created by Lukas Wolfsteiner on 03.02.2016.
@@ -33,6 +32,8 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
     private static final String LOG_TAG = "MainPresenterImpl";
     private Context applicationContext;
     private MainActivity mainActivity;
+
+    private String state_action;
     private File baseFile;
     private Intent intent;
     private int STATE;
@@ -57,7 +58,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
     @Override
     public void onIntentReceived(@NonNull Intent intent) {
         this.STATE = getState(intent);
-        String state_action;
+        this.baseFile = getFile(intent);
 
         switch (STATE) {
 
@@ -80,23 +81,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
                 return;
         }
 
-
-        state_action = StringUtils.capitalizeFirstLetter(state_action);
-        this.baseFile = IntentUtils.getFile(intent);
-        if (baseFile != null) {
-
-            String activityTitle = String.format(
-                    mainActivity.getString(R.string.dialog_name),
-                    state_action,
-                    baseFile.getName(),
-                    Constants.ENCRYPTION_ALGORITHM
-            );
-
-            mainActivity.setTitle(activityTitle);
-        }
-
-        mainActivity.textViewPasswordHint.setText(state_action.concat("ion password"));
-        mainActivity.buttonPositive.setText(state_action);
+        this.onTextChanges();
     }
 
     @Override
@@ -119,7 +104,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
         }
 
         try {
-            File baseFile = IntentUtils.getFile(intent);
+            this.baseFile = getFile(intent);
             if (baseFile == null) {
 
                 throw new FileNotFoundException("Couldn't get base file.");
@@ -163,6 +148,43 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
 
             Toast.makeText(applicationContext, applicationContext.getString(R.string.message_unable_to_locate_basefile), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onTextChanges() {
+
+        this.onTitleChange();
+        this.onContentTextChange();
+    }
+
+    /**
+     * This method handles changes on the main dialog title.
+     */
+    @Override
+    public void onTitleChange() {
+        state_action = capitalizeFirstLetter(state_action);
+        if (baseFile != null) {
+
+            String activityTitle = String.format(
+                    state_action,
+                    baseFile.getName()
+            );
+
+            mainActivity.setTitle(activityTitle);
+        }
+    }
+
+    /**
+     * This method handles text changes on the main dialog content.
+     */
+    @Override
+    public void onContentTextChange() {
+
+        // R.id.textViewCaptionPassword
+        mainActivity.textViewCaptionPassword.setText(state_action.concat("ion password"));
+
+        // R.id.buttonPositive
+        mainActivity.buttonPositive.setText(state_action);
     }
 
     @Override
