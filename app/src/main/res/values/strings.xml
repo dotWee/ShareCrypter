@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ShareCrypter</string>
+
+    <string name="dialog_name">%s %s using %s?</string>
     <string name="dialog_name_error">Fatal error</string>
 
     <string name="caption_password">password</string>

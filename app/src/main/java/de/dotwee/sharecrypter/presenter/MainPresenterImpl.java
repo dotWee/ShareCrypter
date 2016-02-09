@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import de.dotwee.sharecrypter.Constants;
 import de.dotwee.sharecrypter.R;
 import de.dotwee.sharecrypter.model.actions.AbstractCryptAction;
 import de.dotwee.sharecrypter.model.actions.DecryptAction;
@@ -32,6 +33,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
     private static final String LOG_TAG = "MainPresenterImpl";
     private Context applicationContext;
     private MainActivity mainActivity;
+    private File baseFile;
     private Intent intent;
     private int STATE;
 
@@ -41,8 +43,8 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
 
     private MainPresenterImpl(MainActivity mainActivity) {
         this.applicationContext = mainActivity.getApplicationContext();
-        this.mainActivity = mainActivity;
         this.intent = mainActivity.getIntent();
+        this.mainActivity = mainActivity;
 
         onIntentReceived(intent);
     }
@@ -78,9 +80,21 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
                 return;
         }
 
-        state_action = StringUtils.capitalizeFirstLetter(state_action);
 
-        mainActivity.setTitle(state_action.concat(" ").concat(mainActivity.getString(R.string.caption_file)));
+        state_action = StringUtils.capitalizeFirstLetter(state_action);
+        this.baseFile = IntentUtils.getFile(intent);
+        if (baseFile != null) {
+
+            String activityTitle = String.format(
+                    mainActivity.getString(R.string.dialog_name),
+                    state_action,
+                    baseFile.getName(),
+                    Constants.ENCRYPTION_ALGORITHM
+            );
+
+            mainActivity.setTitle(activityTitle);
+        }
+
         mainActivity.textViewPasswordHint.setText(state_action.concat("ion password"));
         mainActivity.buttonPositive.setText(state_action);
     }
@@ -95,6 +109,7 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
     @Override
     public void onButtonPositive() {
 
+        // 12345678
         String password = mainActivity.editTextPassword.getText().toString();
         if (password.isEmpty()) {
             Toast.makeText(mainActivity, mainActivity.getString(R.string.message_no_empty_password_allowed), Toast.LENGTH_SHORT).show();
