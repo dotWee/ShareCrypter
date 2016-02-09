@@ -54,8 +54,12 @@ public final class IntentUtils {
             case Intent.ACTION_VIEW:
                 Timber.i("Using Intent.ACTION_VIEW method to get the file path");
 
-                filePath = intent.getDataString().replace("file:/", "");
+                filePath = intent.getDataString();
                 break;
+        }
+
+        if (filePath.startsWith("file:/")) {
+            filePath = filePath.replace("file:/", "");
         }
 
         if (filePath.isEmpty()) {
