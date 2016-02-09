@@ -17,4 +17,5 @@
     <string name="message_unable_to_locate_basefile">Could\'t get the base-file. Take a look at your logcat.</string>
     <string name="message_no_file_provided">Warning: No file provided. \/n\/nThis application is useless without a file attached. Open or send a single file to this application using a file-browser to start de-/encrypting your files.</string>
     <string name="message_work_finished">File has been successfully %2ed.</string>
+    <string name="message_permission_necessary">You need to grant access to external storage to en-/decrypt files. Without permission, this application won\'t work.</string>
 </resources>
