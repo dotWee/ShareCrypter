@@ -20,13 +20,13 @@ public final class CryptUtils {
     private static final String LOG_TAG = "CryptUtils";
 
     @NonNull
-    public static byte[] encrypt(@NonNull byte[] data, @NonNull final String password) throws Exception {
-        return doFinal(data, generateKey(password), Cipher.ENCRYPT_MODE);
+    public static byte[] encrypt(@NonNull byte[] data, @NonNull final String password, boolean hash) throws Exception {
+        return doFinal(data, generateKey(password, hash), Cipher.ENCRYPT_MODE);
     }
 
     @NonNull
-    public static byte[] decrypt(@NonNull byte[] data, @NonNull final String password) throws Exception {
-        return doFinal(data, generateKey(password), Cipher.DECRYPT_MODE);
+    public static byte[] decrypt(@NonNull byte[] data, @NonNull final String password, boolean hash) throws Exception {
+        return doFinal(data, generateKey(password, hash), Cipher.DECRYPT_MODE);
     }
 
 
@@ -45,15 +45,17 @@ public final class CryptUtils {
      * @return SHA256 of the password
      */
     @NonNull
-    private static SecretKeySpec generateKey(@NonNull final String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    private static SecretKeySpec generateKey(@NonNull final String password, boolean hash) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        byte[] key = password.getBytes("UTF-8");
 
-        final MessageDigest digest = MessageDigest.getInstance(Constants.HASH_ALGORITHM);
-        byte[] bytes = password.getBytes("UTF-8");
+        if (hash) {
+            final MessageDigest digest = MessageDigest.getInstance(Constants.HASH_ALGORITHM);
+            digest.update(key, 0, key.length);
+            key = digest.digest();
 
-        digest.update(bytes, 0, bytes.length);
-        byte[] key = digest.digest();
+            Timber.i("SHA-256 key %s", Arrays.toString(key));
+        }
 
-        Timber.i("SHA-256 key %s", Arrays.toString(key));
         return new SecretKeySpec(key, "AES");
     }
 }

@@ -8,10 +8,12 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import de.dotwee.sharecrypter.Constants;
 import de.dotwee.sharecrypter.R;
 import de.dotwee.sharecrypter.model.actions.AbstractCryptAction;
-import de.dotwee.sharecrypter.model.actions.DecryptAction;
-import de.dotwee.sharecrypter.model.actions.EncryptAction;
+import de.dotwee.sharecrypter.model.actions.CryptActionConfig;
+import de.dotwee.sharecrypter.model.actions.implementaions.DecryptAction;
+import de.dotwee.sharecrypter.model.actions.implementaions.EncryptAction;
 import de.dotwee.sharecrypter.model.callbacks.CryptActionCallback;
 import de.dotwee.sharecrypter.model.commands.CryptCommand;
 import de.dotwee.sharecrypter.model.commands.CryptCommandManager;
@@ -110,23 +112,19 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
                 throw new FileNotFoundException("Couldn't get base file.");
             }
 
+            CryptActionConfig cryptActionConfig = new CryptActionConfig(
+                    this, password, baseFile, mainActivity.checkBoxHash.isChecked()
+            );
+
             AbstractCryptAction cryptAction;
 
             switch (STATE) {
                 case STATE_ENCRYPT:
-                    cryptAction = new EncryptAction(
-                            baseFile,
-                            password,
-                            this
-                    );
+                    cryptAction = new EncryptAction(cryptActionConfig);
                     break;
 
                 case STATE_DECRYPT:
-                    cryptAction = new DecryptAction(
-                            baseFile,
-                            password,
-                            this
-                    );
+                    cryptAction = new DecryptAction(cryptActionConfig);
                     break;
 
                 default:
@@ -185,6 +183,9 @@ public class MainPresenterImpl implements MainPresenter, CryptActionCallback {
 
         // R.id.buttonPositive
         mainActivity.buttonPositive.setText(state_action);
+
+        // R.id.checkBoxHash
+        mainActivity.checkBoxHash.setText(String.format(mainActivity.getString(R.string.caption_hash), Constants.HASH_ALGORITHM));
     }
 
     @Override

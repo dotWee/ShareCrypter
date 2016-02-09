@@ -4,6 +4,7 @@
     <string name="dialog_name" formatted="false">%s %s</string>
     <string name="dialog_name_error">Fatal error</string>
 
+    <string name="caption_hash" formatted="false">Use %s-hashed password</string>
     <string name="caption_password">password</string>
     <string name="caption_file">file</string>
 

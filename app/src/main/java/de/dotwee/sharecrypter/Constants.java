@@ -11,6 +11,7 @@ public final class Constants {
     public static final String ENCRYPTED_FILE_EXTENSION = ".crypt";
     public static final String ENCRYPTION_ALGORITHM = "AES/CBC/PKCS5Padding";
     public static final String HASH_ALGORITHM = "SHA-256";
+
     private static final String LOG_TAG = "Constants";
 
     @NonNull
