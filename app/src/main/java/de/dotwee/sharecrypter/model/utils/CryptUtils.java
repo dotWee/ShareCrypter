@@ -1,9 +1,7 @@
 package de.dotwee.sharecrypter.model.utils;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,8 +12,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import de.dotwee.sharecrypter.Constants;
 import timber.log.Timber;
-
-import static de.dotwee.sharecrypter.Constants.ENCRYPTED_FILE_EXTENSION;
 
 /**
  * Created by Lukas Wolfsteiner on 03.02.2016.
@@ -40,16 +36,6 @@ public final class CryptUtils {
         cipher.init(CRYPT_MODE, secretKeySpec);
 
         return cipher.doFinal(data);
-    }
-
-    /**
-     * Checks if a file is encrypted by reading its name
-     *
-     * @param file to check
-     * @return if file is encrypted or not
-     */
-    public static boolean isEncrypted(@Nullable File file) {
-        return file != null && file.getName().endsWith(ENCRYPTED_FILE_EXTENSION);
     }
 
     /**
