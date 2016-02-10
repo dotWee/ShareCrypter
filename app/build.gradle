@@ -29,7 +29,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Testing frameworks
-    testCompile "org.robolectric:robolectric:3.0"
     testCompile 'junit:junit:4.12'
 
     // UI tools
